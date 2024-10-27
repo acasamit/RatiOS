@@ -73,6 +73,18 @@ void enable_cursor(uint8_t cursor_start, uint8_t cursor_end)
 	outb(0x3D5, (inb(0x3D5) & 0xE0) | cursor_end);
 }
 
+void update_current_screen()
+{
+	uint16_t *tab;
+
+	if (screen_selected == 1)
+		tab = screen_1;
+	else
+		tab = screen_2;
+	for (int i = 0; i != 2000; i++)
+		tab[i] = vga_entry(terminal_buffer[i] & 0x00FF, terminal_color);
+}
+
 void terminal_scroll(char c)
 {
 	int pos = 79;
@@ -93,6 +105,7 @@ void terminal_scroll(char c)
 	}
 	else
 		terminal_set_cursor(0, 24);
+	update_current_screen();
 }
 
 void terminal_refresh()
