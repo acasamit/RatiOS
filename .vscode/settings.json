@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"*.tcc": "c",
+		"random": "c",
+		"queue": "c",
+		"chrono": "c"
+	}
+}

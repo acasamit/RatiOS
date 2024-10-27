@@ -1,11 +1,11 @@
 #include "kernel.h"
 
-unsigned int vga_entry_color(enum vga_color fg, enum vga_color bg) 
+uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg)
 {
 	return fg | bg << 4;
 }
 
-unsigned int vga_entry(unsigned char uc, unsigned int color) 
+uint16_t vga_entry(unsigned char uc, uint8_t color)
 {
-	return (unsigned int) uc | (unsigned int) color << 8;
+	return (uint16_t) uc | (uint16_t) color << 8;
 }
