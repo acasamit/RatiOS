@@ -49,7 +49,7 @@ typedef struct	s_xy
 #define ICW4_SFNM	0x10		/* Special fully nested (not) */
 
 /*Kernel Initialisation Structures*/
-#define SEGMENT_NUMBER 3
+#define SEGMENT_NUMBER 7
 #define ITR_NUMBER 256
 
 struct gdt_entry {

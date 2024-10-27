@@ -22,7 +22,7 @@ void gdt_set()
 	.base_low = 0x0000,
 	.base_middle = 0x00,
 	.access = 0x9A,
-	.granularity = 0xCF, // 32b
+	.granularity = 0xCF,
 	.base_high = 0x00};
 
 	gdt[2] = (struct gdt_entry){
@@ -30,8 +30,40 @@ void gdt_set()
 	.base_low = 0x0000,
 	.base_middle = 0x00,
 	.access = 0x92,
-	.granularity = 0xCF, // 32b
+	.granularity = 0xCF,
 	.base_high = 0x00};
+
+	gdt[3] = (struct gdt_entry){
+		.limit_low = 0xFFFF,
+		.base_low = 0x0000,
+		.base_middle = 0x00,
+		.access = 0x92,
+		.granularity = 0xCF,
+		.base_high = 0x00};
+
+	gdt[4] = (struct gdt_entry){
+		.limit_low = 0xFFFF,
+		.base_low = 0x0000,
+		.base_middle = 0x00,
+		.access = 0xFA,
+		.granularity = 0xCF,
+		.base_high = 0x00};
+
+	gdt[5] = (struct gdt_entry){
+		.limit_low = 0xFFFF,
+		.base_low = 0x0000,
+		.base_middle = 0x00,
+		.access = 0xF2,
+		.granularity = 0xCF,
+		.base_high = 0x00};
+
+	gdt[6] = (struct gdt_entry){
+		.limit_low = 0xFFFF,
+		.base_low = 0x0000,
+		.base_middle = 0x00,
+		.access = 0xF2,
+		.granularity = 0xCF,
+		.base_high = 0x00};
 
 	gdt_load();
 }
