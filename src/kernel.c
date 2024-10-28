@@ -1,6 +1,7 @@
 #include "kernel.h"
 
 uint8_t lock = 0;
+uint8_t halt = 1;
 
 void lock_screen()
 {
@@ -8,7 +9,7 @@ void lock_screen()
 	pos_save.x = terminal_column;
 	pos_save.y = terminal_row;
 
-	terminal_clear();
+	terminal_clear(0);
 	terminal_column = 35;
 	terminal_row = 11;
 	printk("Password:");
@@ -28,9 +29,10 @@ void lock_screen()
 void kernel_main()
 {
 	kinit();
-	printk("Welcome to RatiOS! %d\n", 42);
+
+	printk(">");
 	terminal_set_cursor(terminal_column, terminal_row);
-	while(1)
+	while(halt)
 	{
 		if (lock == 1)
 			lock_screen();

@@ -5,6 +5,11 @@ void outb(uint16_t port, uint8_t value)
 	__asm__ volatile ("outb %0, %1" : : "a"(value), "Nd"(port));
 }
 
+void outw(uint16_t port, uint16_t value)
+{
+	__asm__ volatile ("outw %0, %1" : : "a"(value), "Nd"(port));
+}
+
 uint8_t inb(uint16_t port)
 {
 	uint8_t result;
@@ -186,4 +191,40 @@ int strcmp(char *str1, char *str2)
 	while ((str1[i] == str2[i]) && str1[i])
 		i++;
 	return (str1[i] - str2[i]);
+}
+
+int strncmp(char *str1, char *str2, int n)
+{
+	int i = 0;
+
+	while ((str1[i] == str2[i]) && str1[i] && i != n)
+		i++;
+	return (str1[i] - str2[i]);
+}
+
+void print_memory(void *addr, int size)
+{
+	const char* hex_digits = "0123456789ABCDEF";
+	char *addr_1b = addr;
+	int i = -1;
+	int count = 0;
+
+	printk("%x : ", addr);
+	writek(addr_1b, 4);
+	printk(" : ");
+	while(++i != size)
+	{
+		if (count == 4)
+		{
+			printk("\n%x : ", addr);
+			writek(addr_1b + i, 4);
+			printk(" : ");
+			count = 0;
+		}
+		terminal_putchar(hex_digits[(addr_1b[i] >> 4) & 0xF]);
+		terminal_putchar(hex_digits[addr_1b[i] & 0xF]);
+		terminal_putchar(' ');
+		count++;
+	}
+	terminal_putchar('\n');
 }

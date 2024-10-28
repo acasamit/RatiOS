@@ -14,6 +14,7 @@ typedef signed long long	ssize_t;
 
 #define NULL ((void*)0)
 extern uint8_t lock;
+extern uint8_t halt;
 
 typedef struct	s_xy
 {
@@ -26,6 +27,7 @@ typedef struct	s_xy
 #define P_VGA_COMMAND 0x3D4
 #define P_VGA_DATA 0x3D5
 #define P_PS2_KBD 0x60
+#define P_ACPI 0x604
 
 /*PIC defines*/
 #define PIC1		0x20		/* IO base address for master PIC */
@@ -155,7 +157,7 @@ void writek(const char* data, uint32_t size);
 void terminal_set_cursor(uint8_t x, uint8_t y);
 void terminal_delchar();
 void terminal_switch();
-void terminal_clear();
+void terminal_clear(uint8_t screen);
 void disable_cursor();
 void enable_cursor(uint8_t cursor_start, uint8_t cursor_end);
 void terminal_refresh();
@@ -167,9 +169,13 @@ extern uint16_t* terminal_buffer;
 extern uint8_t terminal_color;
 extern uint8_t screen_selected;
 
+/*Shell functions*/
+void shell(char c);
+
 /*Feurlib functions*/
 uint8_t inb(uint16_t port);
 void outb(uint16_t port, uint8_t value);
+void outw(uint16_t port, uint16_t value);
 void cli();
 void sti();
 void io_wait();
@@ -182,3 +188,5 @@ void write_serial(char *str);
 void *memset(void *dest, int val, uint32_t len);
 void PIC_sendEOI(uint8_t irq);
 int strcmp(char *str1, char *str2);
+void print_memory(void *addr, int size);
+int strncmp(char *str1, char *str2, int n);

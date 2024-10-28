@@ -1,6 +1,6 @@
 ISO=feur.iso
 KERNEL_BIN=iso/boot/feur.bin
-SRC_FILES=src/kernel.c src/vga.c src/term.c src/feurlib.c src/kinit.c src/exception.c src/handler.c
+SRC_FILES=src/kernel.c src/vga.c src/term.c src/feurlib.c src/kinit.c src/exception.c src/handler.c src/shell.c
 KERNEL_OBJ=$(SRC_FILES:src/%.c=obj/%.o)
 MULTIBOOT_OBJ=obj/boot.o
 GDT_OBJ=obj/kernel_initialization.o  # Ajouter la variable pour l'objet gdt.s

@@ -131,8 +131,21 @@ void terminal_switch()
 	terminal_refresh();
 }
 
-void terminal_clear()
+void terminal_clear(uint8_t screen)
 {
+	uint16_t *tab;
+
+	if (screen == 1)
+		tab = screen_1;
+	if (screen == 2)
+		tab = screen_2;
+	if (screen)
+	{
+		for (int i = 0; i != 2000; i++)
+			tab[i] = vga_entry(0, terminal_color);
+		terminal_column = 0;
+		terminal_row = 0;
+	}
 	for (int i = 0; i != 2000; i++)
 		terminal_buffer[i] = vga_entry(0, terminal_color);
 }

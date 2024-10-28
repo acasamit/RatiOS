@@ -51,31 +51,15 @@ void handle_arrow(char c)
 {
 	if (c == RIGHT_ARROW)
 	{
-		if (terminal_row * VGA_WIDTH + terminal_column == 2000)
-			return;
-		if (terminal_buffer[terminal_row * VGA_WIDTH + terminal_column] & 0xFF)
-		{
-			if (terminal_column == VGA_WIDTH - 1 && terminal_row != VGA_HEIGHT - 1)
-			{
-				terminal_column = 0;
-				terminal_row++;
-			}
-			else if (terminal_column != VGA_WIDTH)
-				terminal_column++;
-		}
+		int index = terminal_row * VGA_WIDTH + terminal_column;
+		if (terminal_buffer[index] & 0xFF)
+			terminal_column++;
 	}
 	else if (c == LEFT_ARROW)
 	{
-		if (terminal_row || terminal_column)
-		{
-			if (!terminal_column)
-			{
-				terminal_row--;
-				terminal_column = VGA_WIDTH - 1;
-			}
-			else
-				terminal_column--;
-		}
+		if (terminal_column == 1)
+			return;
+		terminal_column--;
 	}
 }
 
@@ -158,9 +142,16 @@ void keyboard_handler()
 		else if (kbdus[scancode] == CTRL)
 			ctrl = 1;
 		else if (kbdus[scancode] == '\b')
+		{
+			shell(kbdus[scancode]);
 			terminal_delchar();
+		}
 		else
-			terminal_putchar(kbdus[scancode]);
+		{
+			shell(kbdus[scancode]);
+			if (kbdus[scancode] != '\n')
+				terminal_putchar(kbdus[scancode]);
+		}
 		terminal_set_cursor(terminal_column, terminal_row);
 	}
 }
